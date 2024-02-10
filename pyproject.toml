@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "second-brain"
+version = "0.1.0"
+description = "Provides capabilities for second brain Obsidian."
+authors = ["pernulio <cpernul@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
