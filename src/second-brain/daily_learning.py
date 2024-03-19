@@ -39,8 +39,12 @@ def populate_knowledge_store(root_path: Path) -> dict:
         if path.is_file():
             content = read_file(path)
             metadata = extract_metadata(content)
+            title_path = (
+                str(path.relative_to(root_path)).replace(".md", "").replace("\\", " / ")
+            )
             knowledge_store[path] = {
                 "content": content,
+                "title": title_path,
                 "metadata": metadata,
             }
     return knowledge_store
@@ -55,7 +59,7 @@ def get_all_tags(store: dict) -> list:
     return list(set(all_tags))
 
 
-def choose_item(store: dict, in_tags: list = None) -> str | None:
+def choose_item(store: dict, in_tags: list = None) -> dict | None:
     if in_tags:
         filtered_store = {
             k: v
@@ -66,7 +70,7 @@ def choose_item(store: dict, in_tags: list = None) -> str | None:
         filtered_store = store
     if len(filtered_store) > 0:
         random_key = random.choice(list(filtered_store.keys()))
-        return store[random_key].get("content")
+        return store[random_key]
     else:
         return None
 
@@ -83,6 +87,7 @@ def main():
     print(sorted(all_tags))
 
     item = choose_item(knowledge_store, ["career", "politics"])
+    # TODO: add title and send email or otherwise!
     print(convert_to_html(item))
 
 
